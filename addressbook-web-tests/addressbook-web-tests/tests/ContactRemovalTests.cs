@@ -12,8 +12,19 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            app.Contacts.RemoveContact(1);
-            app.auth.Logout();
+            app.Contacts.Remove(1);
+        }
+
+        [Test]
+        public void ContactRemovalFromModificationTest()
+        {
+            app.Contacts.RemoveFromModification(1);
+        }
+
+        [Test]
+        public void ContactRemovalAllTest()
+        {
+            app.Contacts.Remove();
         }
     }
 }

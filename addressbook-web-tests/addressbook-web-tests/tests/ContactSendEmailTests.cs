@@ -12,6 +12,13 @@ namespace WebAddressbookTests
         [Test]
         public void ContactSendEmailTest()
         {
+            app.Contacts.SendEmail(1);
+        }
+
+        [Test]
+        public void ContactSendEmailForAllTest()
+        {
+            app.Contacts.SendEmail();
         }
     }
 }

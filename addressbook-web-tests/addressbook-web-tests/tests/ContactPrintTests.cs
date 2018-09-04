@@ -3,16 +3,17 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
-
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactPrintTests : TestBase
     {
         [Test]
-        public void ContactModificationTest()
+        public void ContactPrintTest()
         {
-
+            app.Contacts.Print(2);
         }
+
+       
     }
 }

@@ -18,7 +18,6 @@ namespace WebAddressbookTests
             group.Footer = "dhsdfg";
             group.Header = "dfgh";
             app.Groups.Create(group);
-            app.auth.Logout();
         }
 
         [Test]
@@ -28,7 +27,6 @@ namespace WebAddressbookTests
             group.Footer = "";
             group.Header = "";
             app.Groups.Create(group);
-            app.auth.Logout();
         }
 
     } 

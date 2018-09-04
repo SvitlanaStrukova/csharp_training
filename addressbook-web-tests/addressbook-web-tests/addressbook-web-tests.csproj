@@ -76,11 +76,9 @@
     <Compile Include="tests\GroupRemovalTests.cs" />
     <Compile Include="tests\ContactRemovalTests.cs" />
     <Compile Include="tests\ContactAddToGroupTests.cs" />
-    <Compile Include="ContactSendEmailTests.cs" />
-    <Compile Include="ContactModificationTests.cs" />
-    <Compile Include="ContactPrintTests.cs" />
-    <Compile Include="ContactHomepageTests.cs" />
-    <Compile Include="ContactSaveofVcardTests.cs" />
+    <Compile Include="tests\ContactSendEmailTests.cs" />
+    <Compile Include="tests\ContactModificationTests.cs" />
+    <Compile Include="tests\ContactPrintTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

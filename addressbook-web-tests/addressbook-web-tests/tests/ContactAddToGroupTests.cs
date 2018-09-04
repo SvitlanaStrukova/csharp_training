@@ -12,8 +12,15 @@ namespace WebAddressbookTests
         [Test]
         public void ContactAddToGroupTest()
         {
-            app.Contacts.AddContactToGroup(1,2);
-            app.auth.Logout();
+            app.Contacts.AddToGroup(1,"d");
         }
+
+        [Test]
+        public void ContactAddAllToGroupTest()
+        {
+            app.Contacts.AddToGroup("d");
+        }
+
+
     }
 }

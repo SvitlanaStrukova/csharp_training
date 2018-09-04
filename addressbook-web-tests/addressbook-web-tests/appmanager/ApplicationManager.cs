@@ -67,6 +67,7 @@ namespace WebAddressbookTests
 
         public void Stop()
         {
+            loginHelper.Logout();
             driver.Quit();
         }
 
