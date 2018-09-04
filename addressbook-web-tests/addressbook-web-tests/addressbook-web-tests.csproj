@@ -59,6 +59,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="tests\GroupModificationTests.cs" />
     <Compile Include="model\AccountData.cs" />
     <Compile Include="appmanager\ApplicationManager.cs" />
     <Compile Include="model\ContactData.cs" />
@@ -73,6 +74,13 @@
     <Compile Include="tests\GroupCreationTests.cs" />
     <Compile Include="tests\ContactCreationTests.cs" />
     <Compile Include="tests\GroupRemovalTests.cs" />
+    <Compile Include="tests\ContactRemovalTests.cs" />
+    <Compile Include="tests\ContactAddToGroupTests.cs" />
+    <Compile Include="ContactSendEmailTests.cs" />
+    <Compile Include="ContactModificationTests.cs" />
+    <Compile Include="ContactPrintTests.cs" />
+    <Compile Include="ContactHomepageTests.cs" />
+    <Compile Include="ContactSaveofVcardTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

@@ -17,19 +17,63 @@ namespace WebAddressbookTests
         {
         }
 
-        public void FillContactForm(ContactData contact)
+        public ContactHelper RemoveContact(int v)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(v);
+            RemoveContact();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+        public ContactHelper RemoveContact()
+        {
+            driver.FindElement(By.Name("Delete")).Click();
+            return this;
+        }
+
+        public ContactHelper AddContactToGroup(int c, int g)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectContact(c);
+            SelectGroup(g);
+            AddToGroup();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+        public ContactHelper FillContactForm(ContactData contact)
         {
             driver.FindElement(By.Name("firstname")).Clear();
             driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
             driver.FindElement(By.Name("middlename")).Clear();
             driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
+            return this;
         }
 
-        public void SubmitContactCreation()
+        public ContactHelper AddToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+            return this;
+        }
+
+        public ContactHelper SelectGroup(int v)
+        {
+
+            return this;
+        }
+
+        public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            return this;
         }
 
-        
+        public ContactHelper SelectContact(int index)
+        {
+            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
+            return this;
+        }
+
     }
 }
