@@ -12,13 +12,13 @@ namespace WebAddressbookTests
         [Test]
         public void ContactAddToGroupTest()
         {
-            app.Contacts.AddToGroup(1,"d");
+            app.Contacts.AddToGroup(1, "fgd");
         }
 
         [Test]
         public void ContactAddAllToGroupTest()
         {
-            app.Contacts.AddToGroup("d");
+            app.Contacts.AddToGroup("");
         }
 
 
