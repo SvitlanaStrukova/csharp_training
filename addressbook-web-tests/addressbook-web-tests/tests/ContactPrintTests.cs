@@ -6,12 +6,12 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactPrintTests : TestBase
+    public class ContactPrintTests : AuthTestBase
     {
         [Test]
         public void ContactPrintTest()
         {
-            app.Contacts.Print(2);
+            app.Contacts.Print("dfjg dsfhgj");
         }
 
        

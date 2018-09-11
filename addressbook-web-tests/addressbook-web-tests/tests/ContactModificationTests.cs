@@ -7,22 +7,37 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactModificationTests : TestBase
+    public class ContactModificationTests : AuthTestBase
     {
         [Test]
         public void ContactModificationTest()
         {
-            ContactData newdata = new ContactData("fdhgfdh");
-            newdata.Firstname = "fgh";
-            app.Contacts.Modify(2, newdata);
+            //prepare
+            ContactData newdata = new ContactData("jfswerf");
+            newdata.Firstname = "fjlkhg";
+
+            ContactData olddata = new ContactData("fdhgfdh");
+            olddata.Firstname = "fgh";
+
+            //action
+            app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
+            app.Contacts.Modify(olddata.Firstname + " " + olddata.Lastname, newdata);
         }
+
 
         [Test]
         public void ContactModificationFromDetailsTest()
         {
-            ContactData newdata = new ContactData("gggggg");
-            newdata.Firstname = "ggggg";
-            app.Contacts.ModifyFromDetails(2, newdata);
+            //prepare
+            ContactData newdata = new ContactData("ghjhhh");
+            newdata.Firstname = "fffffff";
+
+            ContactData olddata = new ContactData("khjkjlk");
+            olddata.Firstname = "dfgfdg";
+
+            //action
+            app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
+            app.Contacts.ModifyFromDetails(olddata.Firstname + " " + olddata.Lastname, newdata);            
         }
     }
 }

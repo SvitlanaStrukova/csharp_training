@@ -7,12 +7,12 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactSendEmailTests : TestBase
+    public class ContactSendEmailTests : AuthTestBase
     {
         [Test]
         public void ContactSendEmailTest()
         {
-            app.Contacts.SendEmail(1);
+            app.Contacts.SendEmail("fdhgfdh fgh");
         }
 
         [Test]

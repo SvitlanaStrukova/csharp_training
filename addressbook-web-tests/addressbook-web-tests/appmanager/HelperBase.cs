@@ -33,6 +33,32 @@ namespace WebAddressbookTests
                 return false;
             }
         }
+        public void Type(By locator, string text)
+        {
+            if (text != null)
+            {
+                driver.FindElement(locator).Clear();
+                driver.FindElement(locator).SendKeys(text);
+            }
+        }
+
+        public bool IsElementPresent(string name)
+        {
+            if (IsElementPresent(By.CssSelector("input[title=\"Select (" + name + ")")))
+            {
+                return true;
+            }
+            return false;
+        }
+
+
+        public HelperBase SelectElement(string name)
+        {
+
+            driver.FindElement(By.CssSelector("input[title=\"Select (" + name + ")")).Click();
+
+            return this;
+        }
     }
 
 }

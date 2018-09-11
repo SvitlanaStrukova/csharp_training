@@ -7,12 +7,12 @@ using NUnit.Framework;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactAddToGroupTests : TestBase
+    public class ContactAddToGroupTests : AuthTestBase
     {
         [Test]
         public void ContactAddToGroupTest()
         {
-            app.Contacts.AddToGroup(1, "fgd");
+            app.Contacts.AddToGroup("fdhgfdh fgh", "fgd");
         }
 
         [Test]

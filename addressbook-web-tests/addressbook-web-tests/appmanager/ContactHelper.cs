@@ -17,16 +17,16 @@ namespace WebAddressbookTests
         {
         }
 
-        public ContactHelper SendEmail(int v)
+        public ContactHelper SendEmail(string v)
         {
             manager.Navigator.GoToHomePage();
-            SelectContacts(v);
+            SelectElement(v);
             SendEmailtoContacts();
             manager.Navigator.OpenHomePage();
             return this;
         }
 
-        public ContactHelper RemoveFromModification(int v)
+        public ContactHelper RemoveFromModification(string v)
         {
             manager.Navigator.GoToHomePage();
             InitContactModification(v);
@@ -35,6 +35,14 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper CreateIfNotExist(string v, string d, ContactData olddata)
+        {
+            if (!IsElementPresent(v+" "+d))
+            {
+                Create(olddata);
+            }
+            return this;
+        }
 
         public ContactHelper SendEmail()
         {
@@ -56,13 +64,8 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper DetailsOfContract(int v)
-        {
-            driver.FindElement(By.XPath("(//img[@alt='Details'])["+v+"]")).Click();
-            return this;
-        }
 
-        public ContactHelper Print(int v)
+        public ContactHelper Print(string v)
         {
             manager.Navigator.GoToHomePage();
             DetailsOfContract(v);
@@ -72,10 +75,10 @@ namespace WebAddressbookTests
         }
 
 
-        public ContactHelper Remove(int v)
+        public ContactHelper Remove(string v)
         {
             manager.Navigator.GoToHomePage();
-            SelectContacts(v);
+            SelectElement(v);
             DeleteContact();
             manager.Navigator.GoToHomePage();
             return this;
@@ -90,17 +93,17 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper Modify(int v, ContactData newdata)
+        public ContactHelper Modify(string v, ContactData newdata)
         {
             manager.Navigator.GoToHomePage();
-            InitContactModification(v);
-            FillContactForm(newdata);
+            InitContactModification(v).
+            FillContactForm(newdata);            
             SubmitContactModification();
             manager.Navigator.GoToHomePage();
             return this;
         }
 
-        public ContactHelper ModifyFromDetails(int v, ContactData newdata)
+        public ContactHelper ModifyFromDetails(string v, ContactData newdata)
         {
             manager.Navigator.GoToHomePage();
             DetailsOfContract(v);
@@ -112,10 +115,10 @@ namespace WebAddressbookTests
         }
 
 
-        public ContactHelper AddToGroup(int c, string g)
+        public ContactHelper AddToGroup(string c, string g)
         {
             manager.Navigator.GoToHomePage();
-            SelectContacts(c);
+            SelectElement(c);
             SelectGroup(g);
             AddContactToGroup();
             manager.Navigator.GoToHomePage();
@@ -138,9 +141,12 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper InitContactModification(int v)
+        public ContactHelper InitContactModification(string v)
         {
-            driver.FindElement(By.XPath("(//img[@alt='Edit'])["+v+"]")).Click();
+
+            driver.FindElement(By.CssSelector("a[href=\"edit.php?id=" + driver.FindElement(By.CssSelector("input[title=\"Select (" + v + ")"))
+                .GetAttribute("id"))).FindElement(By.CssSelector("img[title=\"Edit")).Click();
+
             return this;
         }
 
@@ -160,10 +166,8 @@ namespace WebAddressbookTests
 
         public ContactHelper FillContactForm(ContactData contact)
         {
-            driver.FindElement(By.Name("firstname")).Clear();
-            driver.FindElement(By.Name("firstname")).SendKeys(contact.Firstname);
-            driver.FindElement(By.Name("middlename")).Clear();
-            driver.FindElement(By.Name("lastname")).SendKeys(contact.Lastname);
+            Type(By.Name("firstname"), contact.Firstname);
+            Type(By.Name("lastname"), contact.Lastname);
             return this;
         }
 
@@ -192,12 +196,6 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper SelectContacts(int index)
-        {
-            driver.FindElement(By.XPath("(//input[@name='selected[]'])[" + index + "]")).Click();
-            return this;
-        }
-
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
@@ -216,5 +214,15 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper DetailsOfContract(string name)
+        {
+            driver.FindElement(By.CssSelector("a[href=\"view.php?id="+driver.FindElement(By.CssSelector("input[title=\"Select (" + name + ")"))
+                .GetAttribute("id"))).FindElement(By.CssSelector("img[title=\"Details")).Click();
+
+
+            return this;
+        }
+
+                
     }
 }
