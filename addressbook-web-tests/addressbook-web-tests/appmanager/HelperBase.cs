@@ -44,11 +44,23 @@ namespace WebAddressbookTests
 
         public bool IsElementPresent(string name)
         {
-            if (IsElementPresent(By.CssSelector("input[title=\"Select (" + name + ")")))
+
+            if (driver.FindElement(By.CssSelector("h1")).Text=="Group")
             {
-                return true;
+                if (driver.FindElement(By.CssSelector("span.group")).Text == name)
+                {
+                    return true;
+                }
+                return false;
             }
-            return false;
+            else
+            {
+                if (IsElementPresent(By.CssSelector("input[title=\"Select (" + name + ")")))
+                {
+                    return true;
+                }
+                return false;
+            }
         }
 
 

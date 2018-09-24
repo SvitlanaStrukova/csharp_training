@@ -17,13 +17,23 @@ namespace WebAddressbookTests
         public void GroupModificationTest()
         {
             //prepare
-            GroupData newData = new GroupData("fgd");
+            GroupData newData = new GroupData("fklj");
             newData.Footer = null;
-            newData.Header = "dfgh";
+            newData.Header = "dsdg";
 
             //action
-            app.Groups.CreateIfNotExist("hhh");
-            app.Groups.Modify("hhh", newData);
+            app.Groups.CreateIfNotExist("ffff");
+            List<GroupData> oldgroups = app.Groups.GetGroupList();
+            int i = app.Groups.FindIndexByName("ffff");
+            app.Groups.Modify("fgd", newData);
+
+            List<GroupData> groups = app.Groups.GetGroupList();
+
+            oldgroups[i].Name=newData.Name;
+            oldgroups.Sort();
+            groups.Sort();
+            Assert.AreEqual(oldgroups, groups);
+
         }
     }
 }

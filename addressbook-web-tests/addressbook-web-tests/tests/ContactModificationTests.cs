@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -21,7 +22,19 @@ namespace WebAddressbookTests
 
             //action
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
+            List<ContactData> oldcontacts = app.Contacts.GetContactsList();
+            int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
+            Console.Write(i);
             app.Contacts.Modify(olddata.Firstname + " " + olddata.Lastname, newdata);
+            List<ContactData> contacts = app.Contacts.GetContactsList();
+
+            oldcontacts[i].Firstname = newdata.Firstname;
+            oldcontacts[i].Lastname = newdata.Lastname;
+
+            oldcontacts.Sort();
+            contacts.Sort();
+
+            Assert.AreEqual(oldcontacts, contacts);
         }
 
 
@@ -37,7 +50,18 @@ namespace WebAddressbookTests
 
             //action
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
-            app.Contacts.ModifyFromDetails(olddata.Firstname + " " + olddata.Lastname, newdata);            
+            List<ContactData> oldcontacts = app.Contacts.GetContactsList();
+            int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
+            app.Contacts.ModifyFromDetails(olddata.Firstname + " " + olddata.Lastname, newdata);
+            List<ContactData> contacts = app.Contacts.GetContactsList();
+
+            oldcontacts[i].Firstname = newdata.Firstname;
+            oldcontacts[i].Lastname = newdata.Lastname;
+
+            oldcontacts.Sort();
+            contacts.Sort();
+
+            Assert.AreEqual(oldcontacts, contacts);
         }
     }
 }

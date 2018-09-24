@@ -18,7 +18,7 @@ namespace WebAddressbookTests
         [Test]
         public void ContactAddAllToGroupTest()
         {
-            app.Contacts.AddToGroup("");
+            app.Contacts.AddToGroup("fgd");
         }
 
 

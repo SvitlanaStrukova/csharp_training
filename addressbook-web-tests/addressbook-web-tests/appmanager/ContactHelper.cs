@@ -26,6 +26,23 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public List<ContactData> GetContactsList()
+        {
+
+            List<ContactData> contacts = new List<ContactData>();
+            manager.Navigator.GoToHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr"));
+            foreach (IWebElement element in elements)
+            {
+                String[] Name = element.Text.Split(' ');
+                ContactData str = new ContactData(Name[0]);
+                str.Firstname = Name[1];
+                contacts.Add(str);
+            }
+
+            return contacts;
+        }
+
         public ContactHelper RemoveFromModification(string v)
         {
             manager.Navigator.GoToHomePage();
@@ -148,6 +165,24 @@ namespace WebAddressbookTests
                 .GetAttribute("id"))).FindElement(By.CssSelector("img[title=\"Edit")).Click();
 
             return this;
+        }
+
+        public int FindIndexByName(string v)
+        {
+            int i = 0;
+            List<ContactData> contacts = GetContactsList();
+            foreach (ContactData element in contacts)
+            {
+                if (element.Lastname + " " + element.Firstname == v)
+                {
+                    return i;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return -1;
         }
 
         public ContactHelper DeleteContact()

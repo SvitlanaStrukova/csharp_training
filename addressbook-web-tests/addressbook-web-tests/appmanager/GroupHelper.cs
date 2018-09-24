@@ -26,8 +26,40 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public int FindIndexByName(string v)
+        {
+            int i = 0;
+            List<GroupData> groups = GetGroupList();
+            foreach (GroupData element in groups)
+            {
+                if (element.Name == v)
+                {
+                    return i;
+                }
+                else
+                {
+                    i++;
+                }
+            }
+            return -1 ;
+        }
+
+        public List<GroupData> GetGroupList()
+        {
+            List<GroupData> groups = new List<GroupData>();
+            manager.Navigator.GoToGroupsPage();
+            ICollection<IWebElement> elements=driver.FindElements(By.CssSelector("span.group"));
+            foreach(IWebElement element in elements)
+            {
+                groups.Add(new GroupData(element.Text));
+            }
+
+            return groups;
+        }
+
         public GroupHelper CreateIfNotExist(string h)
         {
+            manager.Navigator.GoToGroupsPage();
             if (!IsElementPresent(h))
             {
                 GroupData data = new GroupData(h);
