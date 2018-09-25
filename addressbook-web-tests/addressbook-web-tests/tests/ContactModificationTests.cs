@@ -24,8 +24,11 @@ namespace WebAddressbookTests
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
             List<ContactData> oldcontacts = app.Contacts.GetContactsList();
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
-            Console.Write(i);
+            ContactData oldcontact = oldcontacts[i];
             app.Contacts.Modify(olddata.Firstname + " " + olddata.Lastname, newdata);
+
+            Assert.AreEqual(oldcontacts.Count, app.Contacts.GetContactCount());
+
             List<ContactData> contacts = app.Contacts.GetContactsList();
 
             oldcontacts[i].Firstname = newdata.Firstname;
@@ -35,6 +38,14 @@ namespace WebAddressbookTests
             contacts.Sort();
 
             Assert.AreEqual(oldcontacts, contacts);
+
+            foreach (ContactData contact in contacts)
+            {
+                if (contact.Id == oldcontact.Id)
+                {
+                    Assert.AreEqual(newdata.Lastname+ newdata.Firstname, contact.Lastname+contact.Firstname);
+                }
+            }
         }
 
 
@@ -52,7 +63,10 @@ namespace WebAddressbookTests
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
             List<ContactData> oldcontacts = app.Contacts.GetContactsList();
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
+            ContactData oldcontact = oldcontacts[i];
+
             app.Contacts.ModifyFromDetails(olddata.Firstname + " " + olddata.Lastname, newdata);
+            Assert.AreEqual(oldcontacts.Count, app.Contacts.GetContactCount());
             List<ContactData> contacts = app.Contacts.GetContactsList();
 
             oldcontacts[i].Firstname = newdata.Firstname;
@@ -62,6 +76,13 @@ namespace WebAddressbookTests
             contacts.Sort();
 
             Assert.AreEqual(oldcontacts, contacts);
+            foreach (ContactData contact in contacts)
+            {
+                if (contact.Id == oldcontact.Id)
+                {
+                    Assert.AreEqual(newdata.Lastname + newdata.Firstname, contact.Lastname + contact.Firstname);
+                }
+            }
         }
     }
 }

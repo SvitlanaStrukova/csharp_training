@@ -26,21 +26,29 @@ namespace WebAddressbookTests
             return this;
         }
 
+        private List<ContactData> contactCache = null;
+
         public List<ContactData> GetContactsList()
         {
 
-            List<ContactData> contacts = new List<ContactData>();
-            manager.Navigator.GoToHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr"));
-            foreach (IWebElement element in elements)
+            if (contactCache == null)
             {
-                String[] Name = element.Text.Split(' ');
-                ContactData str = new ContactData(Name[0]);
-                str.Firstname = Name[1];
-                contacts.Add(str);
+                contactCache = new List<ContactData>();
+                manager.Navigator.GoToHomePage();
+                ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
+                foreach (IWebElement element in elements)
+                {
+                    String[] Name = element.Text.Split(' ');
+                    contactCache.Add(new ContactData(Name[0]) { Firstname = Name[1], Id = element.FindElement(By.TagName("input")).GetAttribute("value") });
+                }
             }
 
-            return contacts;
+            return new List<ContactData>(contactCache);
+        }
+
+        public int GetContactCount()
+        {
+            return driver.FindElements(By.Name("entry")).Count;
         }
 
         public ContactHelper RemoveFromModification(string v)
@@ -155,6 +163,7 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactModification()
         {
             driver.FindElement(By.Name("update")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -189,6 +198,7 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.XPath("//input[@value='Delete']")).Click();
             driver.SwitchTo().Alert().Accept();
+            contactCache = null;
             return this;
         }
 
@@ -234,12 +244,14 @@ namespace WebAddressbookTests
         public ContactHelper SubmitContactCreation()
         {
             driver.FindElement(By.Name("submit")).Click();
+            contactCache = null;
             return this;
         }
 
         public ContactHelper DeleteContactFromModification()
         {
             driver.FindElement(By.XPath("(//input[@name='update'])[3]")).Click();
+            contactCache = null;
             return this;
         }
 
@@ -253,8 +265,6 @@ namespace WebAddressbookTests
         {
             driver.FindElement(By.CssSelector("a[href=\"view.php?id="+driver.FindElement(By.CssSelector("input[title=\"Select (" + name + ")"))
                 .GetAttribute("id"))).FindElement(By.CssSelector("img[title=\"Details")).Click();
-
-
             return this;
         }
 

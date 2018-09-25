@@ -24,7 +24,9 @@ namespace WebAddressbookTests
 
             List<ContactData> oldcontacts = app.Contacts.GetContactsList();
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
+            ContactData toBeRemoved = oldcontacts[i];
             app.Contacts.Remove(olddata.Firstname + " " + olddata.Lastname);
+            Assert.AreEqual(oldcontacts.Count - 1, app.Contacts.GetContactCount());
 
             List<ContactData> contacts = app.Contacts.GetContactsList();
 
@@ -33,7 +35,12 @@ namespace WebAddressbookTests
             contacts.Sort();
 
             Assert.AreEqual(oldcontacts, contacts);
-                       
+
+            foreach (ContactData contact in contacts)
+            {
+                Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+            }
+
         }
 
         [Test]
@@ -46,15 +53,25 @@ namespace WebAddressbookTests
             app.Contacts.CreateIfNotExist(olddata.Firstname,olddata.Lastname, olddata);
             List<ContactData> oldcontacts = app.Contacts.GetContactsList();
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
+            ContactData toBeRemoved = oldcontacts[i];
+
             app.Contacts.RemoveFromModification(olddata.Firstname + " " + olddata.Lastname);
 
+            Assert.AreEqual(oldcontacts.Count - 1, app.Contacts.GetContactCount());
+
             List<ContactData> contacts = app.Contacts.GetContactsList();
+            Console.Write(i);
 
             oldcontacts.RemoveAt(i);
             oldcontacts.Sort();
             contacts.Sort();
 
             Assert.AreEqual(oldcontacts, contacts);
+
+            foreach (ContactData contact in contacts)
+            {
+                Assert.AreNotEqual(contact.Id, toBeRemoved.Id);
+            }
 
         }
 
@@ -64,7 +81,7 @@ namespace WebAddressbookTests
             List<ContactData> oldcontacts = app.Contacts.GetContactsList();
             app.Contacts.Remove();
             oldcontacts.Sort();
-            oldcontacts.RemoveRange(0,oldcontacts.Count-1);
+            oldcontacts.RemoveRange(0,oldcontacts.Count);
 
             List<ContactData> contacts = app.Contacts.GetContactsList();
             oldcontacts.Sort();

@@ -21,11 +21,22 @@ namespace WebAddressbookTests
               int i = app.Groups.FindIndexByName("fklj");
               app.Groups.Remove("fklj");
 
-              List<GroupData> groups = app.Groups.GetGroupList();
+            Assert.AreEqual(oldgroups.Count - 1, app.Groups.GetGroupCount());
 
-              oldgroups.RemoveAt(i);
+            List<GroupData> groups = app.Groups.GetGroupList();
 
-              Assert.AreEqual(oldgroups,groups);
+            GroupData toBeRemoved = oldgroups[i];
+            oldgroups.RemoveAt(i);
+
+            oldgroups.Sort();
+            groups.Sort();
+
+            Assert.AreEqual(oldgroups,groups);
+
+            foreach (GroupData group in groups)
+            {
+                Assert.AreNotEqual(group.Id, toBeRemoved.Id);
+            }
         }
 
     }
