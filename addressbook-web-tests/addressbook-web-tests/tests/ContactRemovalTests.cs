@@ -17,8 +17,8 @@ namespace WebAddressbookTests
         public void ContactRemovalTest()
         {
 
-            ContactData olddata = new ContactData("iiiiii");
-            olddata.Firstname = "iiiiiii";
+            ContactData olddata = new ContactData("iiiiii", "iiiiiii");
+
 
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
 
@@ -47,8 +47,8 @@ namespace WebAddressbookTests
         public void ContactRemovalFromModificationTest()
         {
             //prepare
-            ContactData olddata = new ContactData("hjfgh");
-            olddata.Firstname = "gfdxgh";
+            ContactData olddata = new ContactData("hjfgh", "gfdxgh");
+
             //action
             app.Contacts.CreateIfNotExist(olddata.Firstname,olddata.Lastname, olddata);
             List<ContactData> oldcontacts = app.Contacts.GetContactsList();

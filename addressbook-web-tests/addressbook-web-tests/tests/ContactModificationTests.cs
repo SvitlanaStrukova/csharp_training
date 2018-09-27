@@ -14,11 +14,11 @@ namespace WebAddressbookTests
         public void ContactModificationTest()
         {
             //prepare
-            ContactData newdata = new ContactData("jfswerf");
-            newdata.Firstname = "fjlkhg";
+            ContactData newdata = new ContactData("jfswerf", "fjlkhg");
 
-            ContactData olddata = new ContactData("fdhgfdh");
-            olddata.Firstname = "fgh";
+
+            ContactData olddata = new ContactData("fdhgfdh", "fgh");
+
 
             //action
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
@@ -53,11 +53,8 @@ namespace WebAddressbookTests
         public void ContactModificationFromDetailsTest()
         {
             //prepare
-            ContactData newdata = new ContactData("ghjhhh");
-            newdata.Firstname = "fffffff";
-
-            ContactData olddata = new ContactData("khjkjlk");
-            olddata.Firstname = "dfgfdg";
+            ContactData newdata = new ContactData("ghjhhh", "fffffff");
+            ContactData olddata = new ContactData("khjkjlk", "dfgfdg");
 
             //action
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);

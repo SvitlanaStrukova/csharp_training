@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
+using System.Text.RegularExpressions;
+
 
 namespace WebAddressbookTests
 {
@@ -17,6 +19,13 @@ namespace WebAddressbookTests
         {
         }
 
+        public ContactHelper EnterValueForSearchString(string v)
+        {
+            manager.Navigator.GoToHomePage();
+            Type(By.Name("searchstring"), v);
+            return this;
+        }
+
         public ContactHelper SendEmail(string v)
         {
             manager.Navigator.GoToHomePage();
@@ -24,6 +33,35 @@ namespace WebAddressbookTests
             SendEmailtoContacts();
             manager.Navigator.OpenHomePage();
             return this;
+        }
+
+        public ContactData GetContactInformationFromEditForm(string name)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModification(name);
+            string firstname = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string lastname = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string address = driver.FindElement(By.Name("address")).GetAttribute("value");
+            string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
+            string mobileHome = driver.FindElement(By.Name("mobile")).GetAttribute("value");
+            string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+
+            return new ContactData(lastname, firstname) { Address = address, Home = homePhone, Mobile = mobileHome, Work = workPhone };
+
+
+        }
+
+        public ContactData GetContactInformationFromTable(string name)
+        {
+            int i = FindIndexByName(name);
+            manager.Navigator.GoToHomePage();
+            IList<IWebElement> cells=driver.FindElements(By.Name("entry"))[i].FindElements(By.TagName("td"));
+            string firstname = cells[1].Text;
+            string lastname = cells[2].Text;
+            string address = cells[3].Text;
+            string allPhones = cells[5].Text;
+            return new ContactData(lastname, firstname) { Address = address, allPhones = allPhones};
+
         }
 
         private List<ContactData> contactCache = null;
@@ -38,8 +76,8 @@ namespace WebAddressbookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
                 foreach (IWebElement element in elements)
                 {
-                    contactCache.Add(new ContactData(element.FindElements(By.TagName("td"))[1].Text) { Firstname = element.FindElements(By.TagName("td"))[2].Text,
-                        Id = element.FindElement(By.TagName("input")).GetAttribute("value") });
+                    contactCache.Add(new ContactData(element.FindElements(By.TagName("td"))[1].Text, element.FindElements(By.TagName("td"))[2].Text)
+                    { Id = element.FindElement(By.TagName("input")).GetAttribute("value") });
                 }
             }
 
@@ -222,6 +260,13 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public int GetNumberOfSearchResults()
+        {
+            manager.Navigator.GoToHomePage();
+            string text=driver.FindElement(By.TagName("label")).Text;
+            Match m=new Regex(@"\d+").Match(text);
+            return Int32.Parse(m.Value);
+        }
         
         public ContactHelper SendEmailtoContacts()
         {
