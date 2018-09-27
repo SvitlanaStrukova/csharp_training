@@ -38,8 +38,8 @@ namespace WebAddressbookTests
                 ICollection<IWebElement> elements = driver.FindElements(By.Name("entry"));
                 foreach (IWebElement element in elements)
                 {
-                    String[] Name = element.Text.Split(' ');
-                    contactCache.Add(new ContactData(Name[0]) { Firstname = Name[1], Id = element.FindElement(By.TagName("input")).GetAttribute("value") });
+                    contactCache.Add(new ContactData(element.FindElements(By.TagName("td"))[1].Text) { Firstname = element.FindElements(By.TagName("td"))[2].Text,
+                        Id = element.FindElement(By.TagName("input")).GetAttribute("value") });
                 }
             }
 
