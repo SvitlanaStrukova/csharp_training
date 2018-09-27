@@ -31,7 +31,6 @@ namespace WebAddressbookTests
                 return 1;
             }
             return Name.CompareTo(other.Name);
-
         }
 
         public bool Equals(GroupData other)
@@ -54,7 +53,7 @@ namespace WebAddressbookTests
 
         public override string ToString()
         {
-            return "name " + Name;
+            return "name " + Name + "\nheader "+ Header + "\nfooter " +Footer ;
         }
 
     }
