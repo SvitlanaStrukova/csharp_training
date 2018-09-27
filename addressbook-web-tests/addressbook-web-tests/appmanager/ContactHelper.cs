@@ -35,6 +35,19 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public String GetContactInformationFromDetails(string v)
+        {
+            manager.Navigator.GoToHomePage();
+            DetailsOfContract(v);
+            return driver.FindElement(By.Id("content")).Text;
+        }
+
+        public string GetAggreagtedInformationFromContact(ContactData data)
+        {
+            return (data.Firstname + " " + data.Lastname + "\r\n" + data.Address + "\r\n\r\nH: "
+                + data.Home + "\r\nM: " + data.Mobile + "\r\nW: " + data.Work).Trim();
+        }
+
         public ContactData GetContactInformationFromEditForm(string name)
         {
             manager.Navigator.GoToHomePage();
