@@ -31,6 +31,7 @@ namespace WebAddressbookTests
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Email3 { get; set; }
+        public string emails;
         public string Homepage { get; set; }
         public string Byear { get; set; }
         public string Ayear { get; set; }
@@ -63,6 +64,26 @@ namespace WebAddressbookTests
             }
         }
 
+
+        public string Emails
+        {
+            get
+            {
+                if (emails != null)
+                {
+                    return emails;
+                }
+                else
+                {
+                    return (CleanUp(Email) + CleanUp(Email2) + CleanUp(Email3)).Trim();
+                }
+            }
+            set
+            {
+                emails = value;
+            }
+        }
+
         public string CleanUp(string phone)
         {
             if (phone==null)
@@ -70,7 +91,6 @@ namespace WebAddressbookTests
                 return "";
             }
             return Regex.Replace(phone,"[ -()]" ,"") + "\r\n";
-            //phone.Replace(" ","").Replace("-","").Replace("(","").Replace(")","")+"\r\n";
         }
 
         public int CompareTo(ContactData other)
