@@ -44,8 +44,20 @@ namespace WebAddressbookTests
 
         public string GetAggreagtedInformationFromContact(ContactData data)
         {
-            return (data.Firstname + " " + data.Lastname + "\r\n" + data.Address + "\r\n\r\nH: "
-                + data.Home + "\r\nM: " + data.Mobile + "\r\nW: " + data.Work).Trim();
+            return (data.Firstname + " " + data.Lastname + "\r\n"+ AddData("",data.Address) + "\r\n" +AddData("H: ", data.Home)
+                +AddData("M: ", data.Mobile)+ AddData("W: ", data.Work)+AddData("\r\n", data.Emails)).Trim();
+        }
+
+        public string AddData(string prefix, string word)
+        {
+            if (word != "" && word!=null)
+            {
+                return prefix + word + "\r\n";
+            }
+            else
+            {
+                return "";
+            }
         }
 
         public ContactData GetContactInformationFromEditForm(string name)

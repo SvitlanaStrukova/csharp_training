@@ -86,11 +86,11 @@ namespace WebAddressbookTests
 
         public string CleanUp(string phone)
         {
-            if (phone==null)
+            if (phone==null || phone=="")
             {
                 return "";
             }
-            return Regex.Replace(phone,"[ -()]" ,"") + "\r\n";
+            return Regex.Replace(phone,"[ ()-]" ,"")+ "\r\n";
         }
 
         public int CompareTo(ContactData other)
@@ -104,6 +104,7 @@ namespace WebAddressbookTests
 
         }
 
+       
         public bool Equals(ContactData other)
         {
             if (Object.ReferenceEquals(other, null))
