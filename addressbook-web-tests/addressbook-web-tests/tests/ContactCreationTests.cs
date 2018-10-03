@@ -4,6 +4,10 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 using System.Collections.Generic;
+using System.Xml;
+using System.IO;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 
 namespace WebAddressbookTests
@@ -27,6 +31,7 @@ namespace WebAddressbookTests
 
             return contacts;
         }
+
 
         [Test, TestCaseSource("RandomContactDataProvider") ]
         public void ContactCreationTest(ContactData contact)

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Text;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using NUnit.Framework;
 using System.Collections.Generic;
-
+using System.Xml;
+using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace WebAddressbookTests
 {
@@ -27,6 +30,7 @@ namespace WebAddressbookTests
 
             return groups;
         }
+
 
         [Test, TestCaseSource("RandomGroupDataProvider")]
         public void GroupCreationTest(GroupData group)
