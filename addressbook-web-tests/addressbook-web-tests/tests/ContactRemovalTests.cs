@@ -8,7 +8,7 @@ using System.Collections.Generic;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactRemovalTests : AuthTestBase
+    public class ContactRemovalTests : ContactTestBase
     {
 
 
@@ -22,13 +22,14 @@ namespace WebAddressbookTests
 
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
 
-            List<ContactData> oldcontacts = app.Contacts.GetContactsList();
+            List<ContactData> oldcontacts = app.Contacts.GetAll(); 
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
             ContactData toBeRemoved = oldcontacts[i];
-            app.Contacts.Remove(olddata.Firstname + " " + olddata.Lastname);
+
+            app.Contacts.Remove(toBeRemoved);
             Assert.AreEqual(oldcontacts.Count - 1, app.Contacts.GetContactCount());
 
-            List<ContactData> contacts = app.Contacts.GetContactsList();
+            List<ContactData> contacts = app.Contacts.GetAll();
 
             oldcontacts.RemoveAt(i);
             oldcontacts.Sort();
@@ -51,15 +52,15 @@ namespace WebAddressbookTests
 
             //action
             app.Contacts.CreateIfNotExist(olddata.Firstname,olddata.Lastname, olddata);
-            List<ContactData> oldcontacts = app.Contacts.GetContactsList();
+            List<ContactData> oldcontacts = app.Contacts.GetAll();
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
             ContactData toBeRemoved = oldcontacts[i];
 
-            app.Contacts.RemoveFromModification(olddata.Firstname + " " + olddata.Lastname);
+            app.Contacts.RemoveFromModification(toBeRemoved);
 
             Assert.AreEqual(oldcontacts.Count - 1, app.Contacts.GetContactCount());
 
-            List<ContactData> contacts = app.Contacts.GetContactsList();
+            List<ContactData> contacts = app.Contacts.GetAll();
             Console.Write(i);
 
             oldcontacts.RemoveAt(i);
@@ -78,12 +79,12 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalAllTest()
         {
-            List<ContactData> oldcontacts = app.Contacts.GetContactsList();
+            List<ContactData> oldcontacts = app.Contacts.GetAll();
             app.Contacts.Remove();
             oldcontacts.Sort();
             oldcontacts.RemoveRange(0,oldcontacts.Count);
 
-            List<ContactData> contacts = app.Contacts.GetContactsList();
+            List<ContactData> contacts = app.Contacts.GetAll();
             oldcontacts.Sort();
             contacts.Sort();
             Assert.AreEqual(oldcontacts, contacts);

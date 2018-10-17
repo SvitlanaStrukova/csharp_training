@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 namespace WebAddressbookTests
 {
     [TestFixture]
-    public class ContactCreationTests : AuthTestBase
+    public class ContactCreationTests : ContactTestBase
     {
 
 
@@ -50,11 +50,9 @@ namespace WebAddressbookTests
         public void ContactCreationTest(ContactData contact)
         {
 
-            List<ContactData> oldcontacts = app.Contacts.GetContactsList();
+            List<ContactData> oldcontacts = app.Contacts.GetAll();
             app.Contacts.Create(contact);
-            List<ContactData> contacts = app.Contacts.GetContactsList();
-
-
+            List<ContactData> contacts = app.Contacts.GetAll();
 
             Assert.AreEqual(oldcontacts.Count + 1, app.Contacts.GetContactCount());
 

@@ -91,6 +91,15 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public GroupHelper Remove(GroupData group)
+        {
+            manager.Navigator.GoToGroupsPage();
+            SelectElement(Convert.ToInt32(group.Id));
+            RemoveGroup();
+            ReturnToGroupPage();
+            return this;
+        }
+
         public GroupHelper Modify(string index, GroupData newData)
         {
 
@@ -102,7 +111,19 @@ namespace WebAddressbookTests
             ReturnToGroupPage();
             return this;
         }
-        
+
+        public GroupHelper Modify(GroupData oldData, GroupData newData)
+        {
+
+            manager.Navigator.GoToGroupsPage();
+            SelectElement(Convert.ToInt32(oldData.Id));
+            InitGroupModification();
+            FillGroupForm(newData);
+            SubmitGroupModification();
+            ReturnToGroupPage();
+            return this;
+        }
+
         public GroupHelper RemoveGroup()
         {
             driver.FindElement(By.Name("delete")).Click();

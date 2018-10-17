@@ -128,6 +128,16 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper RemoveFromModification(ContactData v)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModification(v.Firstname + " " + v.Lastname);
+            DeleteContactFromModification();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+
         public ContactHelper CreateIfNotExist(string v, string d, ContactData olddata)
         {
             if (!IsElementPresent(v+" "+d))
@@ -177,6 +187,15 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Remove(ContactData v)
+        {
+            manager.Navigator.GoToHomePage();
+            SelectElement(v.Firstname + " " + v.Lastname);
+            DeleteContact();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
         public ContactHelper Remove()
         {
             manager.Navigator.GoToHomePage();
@@ -196,6 +215,17 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper Modify(ContactData olddata, ContactData newdata)
+        {
+            manager.Navigator.GoToHomePage();
+            InitContactModification(olddata.Firstname + " " + olddata.Lastname).
+            FillContactForm(newdata);
+            SubmitContactModification();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+
         public ContactHelper ModifyFromDetails(string v, ContactData newdata)
         {
             manager.Navigator.GoToHomePage();
@@ -206,6 +236,34 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             return this;
         }
+
+
+        public ContactHelper ModifyFromDetails(ContactData olddata, ContactData newdata)
+        {
+            manager.Navigator.GoToHomePage();
+            DetailsOfContract(olddata.Firstname + " " + olddata.Lastname);
+            ModifyContactsDetails();
+            FillContactForm(newdata);
+            SubmitContactModification();
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+        public List<ContactData> GetAll()
+        {
+            List<ContactData> contacts = ContactData.GetAll();
+            List<ContactData> ActiveContacts = new List<ContactData>();
+            foreach (ContactData contact in contacts)
+            {
+                if (contact.Active== "00/00/0000 12:00:00 AM")
+                {
+                    ActiveContacts.Add(contact);
+                }
+            }
+            return ActiveContacts;
+        }
+
+
 
 
         public ContactHelper AddToGroup(string c, string g)
@@ -247,7 +305,7 @@ namespace WebAddressbookTests
         public int FindIndexByName(string v)
         {
             int i = 0;
-            List<ContactData> contacts = GetContactsList();
+            List<ContactData> contacts = GetAll();
             foreach (ContactData element in contacts)
             {
                 if (element.Lastname + " " + element.Firstname == v)

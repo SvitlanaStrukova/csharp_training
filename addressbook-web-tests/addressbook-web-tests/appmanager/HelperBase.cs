@@ -71,6 +71,15 @@ namespace WebAddressbookTests
 
             return this;
         }
+
+
+        public HelperBase SelectElement(int id)
+        {
+
+            driver.FindElement(By.XPath("(//input[@name='selected[]'and @value='"+id+"'])")).Click();
+
+            return this;
+        }
     }
 
 }
