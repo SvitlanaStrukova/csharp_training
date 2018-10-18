@@ -80,7 +80,7 @@ namespace WebAddressbookTests
 
         }
 
-      
+
         public ContactData GetContactInformationFromTable(string name)
         {
             int i = FindIndexByName(name);
@@ -273,6 +273,31 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public ContactHelper RemoveFromGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ChooseGroupFilter(group.Name);
+            SelectElement(contact.Firstname + " " + contact.Lastname);
+            RemoveContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).
+                Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+        public ContactHelper RemoveFromGroup(GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ChooseGroupFilter(group.Name);
+            SelectContacts();
+            RemoveContactFromGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).
+                Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+            manager.Navigator.GoToHomePage();
+            return this;
+        }
+
+
         public ContactHelper ClearGroupFilter()
         {
             new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
@@ -298,6 +323,9 @@ namespace WebAddressbookTests
             manager.Navigator.GoToHomePage();
             return this;
         }
+
+
+
 
         public ContactHelper SubmitContactModification()
         {
@@ -358,6 +386,12 @@ namespace WebAddressbookTests
         public ContactHelper AddContactToGroup()
         {
             driver.FindElement(By.Name("add")).Click();
+            return this;
+        }
+
+        public ContactHelper RemoveContactFromGroup()
+        {
+            driver.FindElement(By.Name("remove")).Click();
             return this;
         }
 

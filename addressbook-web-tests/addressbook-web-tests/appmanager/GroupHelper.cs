@@ -136,6 +136,8 @@ namespace WebAddressbookTests
             return this;
         }
 
+
+
         public GroupHelper SubmitGroupModification()
         {
             driver.FindElement(By.Name("update")).Click();
