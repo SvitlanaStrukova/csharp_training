@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="model\AddressbookDB.cs" />
+    <Compile Include="model\GroupContactRelation.cs" />
     <Compile Include="tests\AuthTestBase.cs" />
     <Compile Include="tests\ContactInformationTests.cs" />
     <Compile Include="tests\GroupModificationTests.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="tests\ContactModificationTests.cs" />
     <Compile Include="tests\ContactPrintTests.cs" />
     <Compile Include="tests\LoginTests.cs" />
+    <Compile Include="tests\TestDBConnectivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

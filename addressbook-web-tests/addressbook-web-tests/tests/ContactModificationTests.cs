@@ -22,14 +22,14 @@ namespace WebAddressbookTests
 
             //action
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
-            List<ContactData> oldcontacts = app.Contacts.GetAll();
+            List<ContactData> oldcontacts = ContactData.GetAll();
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
             ContactData oldcontact = oldcontacts[i];
             app.Contacts.Modify(oldcontact, newdata);
 
             Assert.AreEqual(oldcontacts.Count, app.Contacts.GetContactCount());
 
-            List<ContactData> contacts = app.Contacts.GetAll();
+            List<ContactData> contacts = ContactData.GetAll();
 
             oldcontacts[i].Firstname = newdata.Firstname;
             oldcontacts[i].Lastname = newdata.Lastname;
@@ -58,13 +58,13 @@ namespace WebAddressbookTests
 
             //action
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
-            List<ContactData> oldcontacts = app.Contacts.GetAll();
+            List<ContactData> oldcontacts = ContactData.GetAll();
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
             ContactData oldcontact = oldcontacts[i];
 
             app.Contacts.ModifyFromDetails(oldcontact, newdata);
             Assert.AreEqual(oldcontacts.Count, app.Contacts.GetContactCount());
-            List<ContactData> contacts = app.Contacts.GetAll();
+            List<ContactData> contacts = ContactData.GetAll();
 
             oldcontacts[i].Firstname = newdata.Firstname;
             oldcontacts[i].Lastname = newdata.Lastname;

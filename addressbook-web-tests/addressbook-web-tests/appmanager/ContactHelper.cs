@@ -80,6 +80,7 @@ namespace WebAddressbookTests
 
         }
 
+      
         public ContactData GetContactInformationFromTable(string name)
         {
             int i = FindIndexByName(name);
@@ -113,6 +114,16 @@ namespace WebAddressbookTests
 
             return new List<ContactData>(contactCache);
         }
+
+
+        public List<ContactData> GetContactsForGroup(GroupData group)
+        {
+            manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
+            ChooseGroupFilter(group.Name);
+            return GetContactsList();
+        }
+
 
         public int GetContactCount()
         {
@@ -249,39 +260,41 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public List<ContactData> GetAll()
-        {
-            List<ContactData> contacts = ContactData.GetAll();
-            List<ContactData> ActiveContacts = new List<ContactData>();
-            foreach (ContactData contact in contacts)
-            {
-                if (contact.Active== "00/00/0000 12:00:00 AM")
-                {
-                    ActiveContacts.Add(contact);
-                }
-            }
-            return ActiveContacts;
-        }
-
-
-
-
-        public ContactHelper AddToGroup(string c, string g)
+        public ContactHelper AddToGroup(ContactData contact, GroupData group)
         {
             manager.Navigator.GoToHomePage();
-            SelectElement(c);
-            SelectGroup(g);
+            ClearGroupFilter();
+            SelectElement(contact.Firstname+" "+ contact.Lastname);
+            SelectGroup(group.Name);
             AddContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).
+                Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
             manager.Navigator.GoToHomePage();
             return this;
         }
 
-        public ContactHelper AddToGroup(string g)
+        public ContactHelper ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+            return this;
+        }
+
+
+        public ContactHelper ChooseGroupFilter(string group)
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText(group);
+            return this;
+        }
+
+        public ContactHelper AddToGroup(GroupData group)
         {
             manager.Navigator.GoToHomePage();
+            ClearGroupFilter();
             SelectContacts();
-            SelectGroup(g);
+            SelectGroup(group.Name);
             AddContactToGroup();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10)).
+                            Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
             manager.Navigator.GoToHomePage();
             return this;
         }
@@ -305,7 +318,7 @@ namespace WebAddressbookTests
         public int FindIndexByName(string v)
         {
             int i = 0;
-            List<ContactData> contacts = GetAll();
+            List<ContactData> contacts = ContactData.GetAll();
             foreach (ContactData element in contacts)
             {
                 if (element.Lastname + " " + element.Firstname == v)

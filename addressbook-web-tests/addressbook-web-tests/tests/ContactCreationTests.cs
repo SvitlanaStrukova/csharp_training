@@ -50,9 +50,9 @@ namespace WebAddressbookTests
         public void ContactCreationTest(ContactData contact)
         {
 
-            List<ContactData> oldcontacts = app.Contacts.GetAll();
+            List<ContactData> oldcontacts = ContactData.GetAll();
             app.Contacts.Create(contact);
-            List<ContactData> contacts = app.Contacts.GetAll();
+            List<ContactData> contacts = ContactData.GetAll();
 
             Assert.AreEqual(oldcontacts.Count + 1, app.Contacts.GetContactCount());
 

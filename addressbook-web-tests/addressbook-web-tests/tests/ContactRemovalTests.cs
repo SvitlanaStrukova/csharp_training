@@ -22,14 +22,14 @@ namespace WebAddressbookTests
 
             app.Contacts.CreateIfNotExist(olddata.Firstname, olddata.Lastname, olddata);
 
-            List<ContactData> oldcontacts = app.Contacts.GetAll(); 
+            List<ContactData> oldcontacts = ContactData.GetAll(); 
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
             ContactData toBeRemoved = oldcontacts[i];
 
             app.Contacts.Remove(toBeRemoved);
             Assert.AreEqual(oldcontacts.Count - 1, app.Contacts.GetContactCount());
 
-            List<ContactData> contacts = app.Contacts.GetAll();
+            List<ContactData> contacts = ContactData.GetAll();
 
             oldcontacts.RemoveAt(i);
             oldcontacts.Sort();
@@ -52,7 +52,7 @@ namespace WebAddressbookTests
 
             //action
             app.Contacts.CreateIfNotExist(olddata.Firstname,olddata.Lastname, olddata);
-            List<ContactData> oldcontacts = app.Contacts.GetAll();
+            List<ContactData> oldcontacts = ContactData.GetAll();
             int i = app.Contacts.FindIndexByName(olddata.Lastname + " " + olddata.Firstname);
             ContactData toBeRemoved = oldcontacts[i];
 
@@ -60,7 +60,7 @@ namespace WebAddressbookTests
 
             Assert.AreEqual(oldcontacts.Count - 1, app.Contacts.GetContactCount());
 
-            List<ContactData> contacts = app.Contacts.GetAll();
+            List<ContactData> contacts = ContactData.GetAll();
             Console.Write(i);
 
             oldcontacts.RemoveAt(i);
@@ -79,12 +79,12 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalAllTest()
         {
-            List<ContactData> oldcontacts = app.Contacts.GetAll();
+            List<ContactData> oldcontacts = ContactData.GetAll();
             app.Contacts.Remove();
             oldcontacts.Sort();
             oldcontacts.RemoveRange(0,oldcontacts.Count);
 
-            List<ContactData> contacts = app.Contacts.GetAll();
+            List<ContactData> contacts = ContactData.GetAll();
             oldcontacts.Sort();
             contacts.Sort();
             Assert.AreEqual(oldcontacts, contacts);

@@ -29,7 +29,7 @@ namespace WebAddressbookTests
         public int FindIndexByName(string v)
         {
             int i = 0;
-            List<GroupData> groups = GetGroupList();
+            List<GroupData> groups = GroupData.GetAll();
             foreach (GroupData element in groups)
             {
                 if (element.Name == v)
@@ -70,6 +70,11 @@ namespace WebAddressbookTests
             return driver.FindElements(By.CssSelector("span.group")).Count; 
         }
 
+        public int FindIdByName(string v)
+        {
+            return Convert.ToInt32(driver.FindElement(By.CssSelector("input[title=\"Select (" + v + ")"))
+                .GetAttribute("value"));
+        }
 
         public GroupHelper CreateIfNotExist(string h)
         {

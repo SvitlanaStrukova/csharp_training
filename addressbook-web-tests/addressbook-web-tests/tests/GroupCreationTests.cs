@@ -77,20 +77,21 @@ namespace WebAddressbookTests
             oldgroups.Sort();
             groups.Sort();
             Assert.AreEqual(oldgroups, groups);
-        }     
-        
-        [Test]
-        public void TestDBConnectivity()
-        {
-            DateTime start = DateTime.Now;
-            List<GroupData> fromUI=app.Groups.GetGroupList();
-            DateTime end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
-
-            start = DateTime.Now;
-            List<GroupData> fromDB = GroupData.GetAll();
-            end = DateTime.Now;
-            System.Console.Out.WriteLine(end.Subtract(start));
         }
-    } 
+
+
+        [Test]
+         public void TestDBConnectivity()
+         {
+             DateTime start = DateTime.Now;
+             List<GroupData> fromUI = app.Groups.GetGroupList();
+             DateTime end = DateTime.Now;
+             System.Console.Out.WriteLine(end.Subtract(start));
+
+             start = DateTime.Now;
+             List<GroupData> fromDB = GroupData.GetAll();
+             end = DateTime.Now;
+             System.Console.Out.WriteLine(end.Subtract(start));
+         }
+    }
 }

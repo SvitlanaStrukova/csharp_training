@@ -71,7 +71,7 @@ namespace WebAddressbookTests
         public string Aday { get; set; }
         [Column(Name = "amonth")]
         public string Amonth { get; set; }
-        [Column(Name = "id")]
+        [Column(Name = "id"),PrimaryKey]
         public string Id { get; set; }
         [Column(Name = "deprecated")]
         public string Active { get; set; }
@@ -164,9 +164,10 @@ namespace WebAddressbookTests
 
             using (AddressbookDB db = new AddressbookDB())
             {
-                return (from g in db.Contacts select g).ToList();
+                return (from g in db.Contacts.Where(x=>x.Active== "0000-00-00 00:00:00") select g).ToList();
             }
         }
+
 
     }
 }
